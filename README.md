@@ -48,6 +48,26 @@ load_dotenv()  # This must be called before importing struxpdf
 
 ```python
 from struxpdf import StruxPDF, ChunkingConfig
+from pydantic import BaseModel, Field
+from typing import List, Optional
+import pandas as pd
+
+# Default Financial Schema (built-in)
+class QuarterlyData(BaseModel):
+    quarter: str = Field(description="Quarter (e.g., 'Q1 2025')")
+    total_revenue: Optional[str] = Field(None, description="Total revenue")
+    earnings_per_share: Optional[str] = Field(None, description="EPS (diluted)")
+    net_income: Optional[str] = Field(None, description="Net income")
+    operating_income: Optional[str] = Field(None, description="Operating income")
+    gross_margin: Optional[str] = Field(None, description="Gross margin percentage")
+    operating_expenses: Optional[str] = Field(None, description="Operating expenses")
+    buybacks: Optional[str] = Field(None, description="Share buybacks")
+    dividends: Optional[str] = Field(None, description="Dividends paid")
+
+class CompanyFinancialData(BaseModel):
+    company_name: str = Field(description="Company name")
+    quarters: List[QuarterlyData] = Field(description="Quarterly data")
+
 
 # Initialize with adaptive chunking
 extractor = StruxPDF(
@@ -59,8 +79,11 @@ extractor = StruxPDF(
 )
 
 # Process batch
-pdf_files = ["report1.pdf", "report2.pdf"]
+pdf_files = ["TSLA-Q2-2025-Update.pdf", "citi_earnings_q12025.pdf"]
 df = extractor.process_batch(pdf_files)
+
+# view df
+df
 
 # Export results
 df.to_excel("financial_data.xlsx")
@@ -84,13 +107,13 @@ df.to_excel("financial_data.xlsx")
 - Table Detection - Automatic table identification and extraction
 
 **Production-Ready**
-- Multi-Model Support - GPT, Claude, Llama via LiteLLM
+- Multi-Model Support - GPT, Claude, Llama, SML, etc via LiteLLM
 - Data Normalization - Currency, percentages, number formats
 - Cost Estimation - Token tracking and scale projections
 - Batch Processing - Optimized for 5K docs/quarter
 - Export Formats - CSV, Excel, JSON, DataFrame
 
-**Optimization Pathway/ Future Work-I will need to complete**
+**Optimization Pathway/ Future Work - I will need to complete**
 - MIPROv2 Optimizer - 25-30% accuracy improvement with 10-20 training examples
 - GEPA Optimizer - Advanced reflective optimization for complex reasoning
 - Best-of-N Refinement - Generate multiple candidates and select best (15-30% boost)
@@ -273,7 +296,7 @@ from struxpdf import StruxPDF
 print("StruxPDF installed successfully!")
 ```
 
-## Custom Schemas
+## Custom Schemas (just showing random examples)
 
 ```python
 from pydantic import BaseModel, Field
@@ -365,7 +388,7 @@ optimized = optimizer.optimize(trainset, metric)
 optimized.save("production_model.json")
 ```
 
-## Cloud-Agnostic Architecture
+## Cloud-Agnostic Architecture / System Design
 
 ```
 ┌─────────────────────────────────────────────┐
