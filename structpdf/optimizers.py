@@ -1,5 +1,5 @@
 """
-DSPy Optimizers for StruxPDF: MIPROv2 and GEPA
+DSPy Optimizers for structPDF: MIPROv2 and GEPA
 """
 
 from typing import List, Dict, Any, Callable, Optional
@@ -14,9 +14,9 @@ class OptimizerConfig(BaseModel):
     max_bootstrapped_demos: int = 4
     max_labeled_demos: int = 16
 
-class StruxPDFOptimizer:
+class structPDFOptimizer:
     """
-    Optimizer wrapper for StruxPDF
+    Optimizer wrapper for structPDF
     Supports MIPROv2 (fast, general-purpose) and GEPA (reflective, feedback-driven)
     """
     

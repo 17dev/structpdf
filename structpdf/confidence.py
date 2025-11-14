@@ -1,5 +1,5 @@
 """
-Confidence Scoring System for StruxPDF
+Confidence Scoring System for structPDF
 """
 
 from typing import Dict, Any, List, Optional

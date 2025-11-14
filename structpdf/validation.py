@@ -1,5 +1,5 @@
 """
-Data Validation Module for StruxPDF
+Data Validation Module for structPDF
 """
 
 from typing import Any, Dict, List, Optional

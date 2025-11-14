@@ -1,4 +1,4 @@
-# StruxPDF 
+# structPDF 
 
 Structured data extraction with 100% page coverage, 92%+ accuracy, and multi-model support via LiteLLM from PDFs.
 
@@ -8,7 +8,7 @@ Structured data extraction with 100% page coverage, 92%+ accuracy, and multi-mod
 
 Earnings tend to come in batches, usually at the end of each quarter. We process around 20K documents per year, creating a concentrated rush to get through 5K documents as quickly as possible each quarter. Accuracy needs to be 90% or higher to be useful for financial analysis and decision-making.
 
-**Solution:** StruxPDF provides automated, high-accuracy extraction of financial data from earnings PDFs with:
+**Solution:** structPDF provides automated, high-accuracy extraction of financial data from earnings PDFs with:
 
 - 92-95% accuracy (post-optimization) meeting the 90%+ requirement
 - Batch processing optimised for 5K docs/quarter workloads
@@ -21,7 +21,7 @@ Earnings tend to come in batches, usually at the end of each quarter. We process
 
 **IMPORTANT: READ THE DEMO FIRST**
 
-Before using StruxPDF, please read through `structpdf-quick-demo.ipynb`. This notebook provides a complete demonstration of all StruxPDF capabilities including:
+Before using structPDF, please read through `structpdf-quick-demo.ipynb`. This notebook provides a complete demonstration of all structPDF capabilities including:
 - Multi-page document handling
 - Multi-quarter extraction
 - Custom schemas
@@ -37,17 +37,32 @@ OPENAI_API_KEY=your_openai_key_here
 ANTHROPIC_API_KEY=your_anthropic_key_here  # Optional for Claude
 ```
 
-Then load environment variables in your code:
+Then load environment variables in your code or set env OPENAI_API_KEY:
 
 ```python
 from dotenv import load_dotenv
-load_dotenv()  # This must be called before importing struxpdf
+load_dotenv()  # This must be called before importing structpdf
 ```
+
+## Cost:
+
+- __First run:__ ~$0.003-0.03/doc (calls API)
+- __Cached runs:__ FREE, instant (0.17s vs 2-5s)
+- __Cache persists__ until you delete `~/.dspy_cache/`
+
+__Clear the cache and try again:__
+
+```bash
+rm -rf ~/.dspy_cache/
+```
+
+Then run your code - __it will fail without an API key!__
+
 
 ## Quick Start
 
 ```python
-from struxpdf import StruxPDF, ChunkingConfig
+from structpdf import structPDF, ChunkingConfig
 from pydantic import BaseModel, Field
 from typing import List, Optional
 import pandas as pd
@@ -70,7 +85,7 @@ class CompanyFinancialData(BaseModel):
 
 
 # Initialize with adaptive chunking
-extractor = StruxPDF(
+extractor = structPDF(
     chunking_config=ChunkingConfig(
         max_tokens=8000,
         overlap_tokens=500,
@@ -207,9 +222,9 @@ LLM extractors read cleaned text, understand meaning, and produce structured out
 
 This is where tools like LangStruct, Parsee, LangExtract, and Sieves work best.
 
-## Why StruxPDF
+## Why structPDF
 
-StruxPDF combines both worlds:
+structPDF combines both worlds:
 
 - Vision and OCR tools extract text and tables
 - An LLM maps everything into a clean financial schema
@@ -217,7 +232,7 @@ StruxPDF combines both worlds:
 
 It removes the need for multiple disconnected tools and keeps the workflow simple and reliable.
 
-## Benefits of StruxPDF
+## Benefits of structPDF
 
 - Works for unstructured, semi structured, and structured financial PDFs
 - Produces typed, schema-based output for analytics
@@ -292,8 +307,8 @@ pip install -e .
 from dotenv import load_dotenv
 load_dotenv()
 
-from struxpdf import StruxPDF
-print("StruxPDF installed successfully!")
+from structpdf import structPDF
+print("structPDF installed successfully!")
 ```
 
 ## Custom Schemas (just showing random examples)
@@ -314,7 +329,7 @@ class Invoice(BaseModel):
     total: float
 
 # Use custom schema
-extractor = StruxPDF(schema=Invoice)
+extractor = structPDF(schema=Invoice)
 ```
 
 ## Model Configuration
@@ -345,7 +360,7 @@ dspy.configure(lm=lm)
 ### Confidence Scoring
 
 ```python
-from struxpdf import ConfidenceScorer
+from structpdf import ConfidenceScorer
 
 scorer = ConfidenceScorer()
 conf = scorer.score_field("revenue", value, candidates, source)
@@ -355,7 +370,7 @@ print(f"Confidence: {conf.confidence:.1%}")
 ### Quality Assurance
 
 ```python
-from struxpdf import QualityAssurance
+from structpdf import QualityAssurance
 
 qa = QualityAssurance(critical_fields=['revenue', 'eps'])
 summary = qa.run_all_checks(df, results)
@@ -365,7 +380,7 @@ print(f"QA Score: {summary['overall_score']:.1%}")
 ### Data Normalization
 
 ```python
-from struxpdf import DataNormalizer
+from structpdf import DataNormalizer
 
 normalizer = DataNormalizer()
 df['Revenue'] = df['Revenue'].apply(normalizer.normalize_currency)
@@ -375,7 +390,7 @@ df['Margin'] = df['Margin'].apply(normalizer.normalize_percentage)
 ### MIPROv2 Optimization
 
 ```python
-from struxpdf import StruxPDFOptimizer, OptimizerConfig
+from structpdf import structPDFOptimizer, OptimizerConfig
 
 config = OptimizerConfig(
     optimizer_type="miprov2",
@@ -383,7 +398,7 @@ config = OptimizerConfig(
     max_bootstrapped_demos=4
 )
 
-optimizer = StruxPDFOptimizer(extractor.extractor, config)
+optimizer = structPDFOptimizer(extractor.extractor, config)
 optimized = optimizer.optimize(trainset, metric)
 optimized.save("production_model.json")
 ```
@@ -425,13 +440,13 @@ optimized.save("production_model.json")
 
 See demo notebooks:
 - `structpdf-quick-demo.ipynb` - Quick start guide
-- `struxpdf_demo.ipynb` - Detailed walkthrough
-- `struxpdf_demo_advanced.ipynb` - Advanced features
+- `structpdf_demo.ipynb` - Detailed walkthrough
+- `structpdf_demo_advanced.ipynb` - Advanced features
 
 ## Module Structure
 
 ```
-struxpdf/
+structpdf/
 ├── core.py              # Main extraction logic
 ├── confidence.py        # Confidence scoring
 ├── quality_assurance.py # Validation pipeline
@@ -455,7 +470,7 @@ struxpdf/
 
 ## Environment Setup
 
-**Critical:** You must create a `.env` file in your project root with your API keys. StruxPDF will not work without this file.
+**Critical:** You must create a `.env` file in your project root with your API keys. structPDF will not work without this file.
 
 ```bash
 # .env file (required in project root)
@@ -475,8 +490,8 @@ load_dotenv()
 # Verify keys are loaded (optional)
 assert os.getenv("OPENAI_API_KEY"), "OPENAI_API_KEY not found in .env file"
 
-# Now import and use StruxPDF
-from struxpdf import StruxPDF
+# Now import and use structPDF
+from structpdf import structPDF
 ```
 
 ## License

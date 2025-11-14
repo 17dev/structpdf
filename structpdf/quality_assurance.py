@@ -1,5 +1,5 @@
 """
-Quality Assurance Module for StruxPDF
+Quality Assurance Module for structPDF
 """
 
 from typing import Dict, Any, List, Optional
