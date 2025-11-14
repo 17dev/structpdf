@@ -21,7 +21,7 @@ Earnings tend to come in batches, usually at the end of each quarter. We process
 
 **IMPORTANT: READ THE DEMO FIRST**
 
-Before using structPDF, please read through `structpdf-quick-demo.ipynb`. This notebook provides a complete demonstration of all structPDF capabilities including:
+Before using structPDF, please read through [`structpdf-quick-demo.ipynb`](structpdf-quick-demo.ipynb). This notebook provides a complete demonstration of all structPDF capabilities including:
 - Multi-page document handling
 - Multi-quarter extraction
 - Custom schemas
@@ -66,6 +66,10 @@ from structpdf import structPDF, ChunkingConfig
 from pydantic import BaseModel, Field
 from typing import List, Optional
 import pandas as pd
+
+# import os
+# Or api key here
+# os.environ["OPENAI_API_KEY"] = "sk-your-api-key-here"
 
 # Default Financial Schema (built-in)
 class QuarterlyData(BaseModel):
@@ -128,14 +132,14 @@ df.to_excel("financial_data.xlsx")
 - Batch Processing - Optimized for 5K docs/quarter
 - Export Formats - CSV, Excel, JSON, DataFrame
 
-**Optimization Pathway/ Future Work - I will need to complete**
+**Optimization Pathway/ Future Work - Traning our own models and fine-tuning**
 - MIPROv2 Optimizer - 25-30% accuracy improvement with 10-20 training examples
 - GEPA Optimizer - Advanced reflective optimization for complex reasoning
 - Best-of-N Refinement - Generate multiple candidates and select best (15-30% boost)
 - Future: BootstrapFewShot, COPRO, and other DSPy optimizers
 
 **Architecture**
-- Cloud-Agnostic - Container-based deployment
+- Cloud-Agnostic - Container-based / K8 deployment
 - Auto-Scaling - 10-100 worker instances
 - Message Queue - Distributed processing
 - NoSQL Storage - Metadata and metrics
@@ -160,58 +164,58 @@ df.to_excel("financial_data.xlsx")
 - GPT-4o-mini: $150/quarter
 - GPT-4o PTU: $125/quarter (10x throughput)
 - Claude Haiku: $100/quarter
-- Llama 70B: $25/quarter (self-hosted)
+- Llama 70B: $25/quarter (self-hosted) or any other open weight VLMs (self-hosted)
 
-# Options I Could Have Taken**
+## Options I have tried:
 
 
-## Vision + OCR + Layout Tools (and why they matter)
+### Vision + OCR + Layout Tools - Option
 
 These tools handle the visual and layout side of PDFs: text blocks, tables, headings, and structure.
 
-### OCRFlux
+#### OCRFlux
 
 Turns PDF pages into clean markdown using a vision model.
 
 - Pros: excellent for complex tables.
 - Cons: GPU heavy.
 
-### Chandra / Marker / Surya (Datalab)
+#### Chandra / Marker / Surya (Datalab)
 
 High-quality PDF to markdown with strong layout recovery.
 
 - Pros: very accurate for real-world messy PDFs.
 - Cons: slower and heavier models.
 
-### PaddleOCR
+#### PaddleOCR
 
 Fast classical OCR for text extraction.
 
 - Pros: lightweight and fast on any machine.
 - Cons: limited understanding of layout.
 
-### Table Transformer / TATR
+#### Table Transformer / TATR
 
 Detects and reconstructs tables from PDFs.
 
 - Pros: strong for structured financial tables.
 - Cons: does not handle text or context.
 
-### MinerU
+#### MinerU
 
 General PDF to markdown and layout tool.
 
 - Pros: solid formatting retention.
 - Cons: not specialised for finance.
 
-### olmocr
+#### olmocr
 
 Basic OCR and layout processing.
 
 - Pros: stable.
 - Cons: weaker on complex documents.
 
-## LLM Based Extractors (and why they matter)
+### LLM or VLM Based Extractors - Option
 
 LLM extractors read cleaned text, understand meaning, and produce structured output. They handle:
 
@@ -220,9 +224,8 @@ LLM extractors read cleaned text, understand meaning, and produce structured out
 - Scaling units (millions, billions)
 - Financial terminology and context
 
-This is where tools like LangStruct, Parsee, LangExtract, and Sieves work best.
 
-## Why structPDF
+## structPDF
 
 structPDF combines both worlds:
 
@@ -237,7 +240,7 @@ It removes the need for multiple disconnected tools and keeps the workflow simpl
 - Works for unstructured, semi structured, and structured financial PDFs
 - Produces typed, schema-based output for analytics
 - Includes normalisation, validation, and confidence scoring
-- Runs well on Mac (no Nvidia GPU needed)
+- Runs well on CPU (no Nvidia GPU needed)
 - Modular: plug in any OCR or LLM backend
 - Cost efficient by sending only the right text to the LLM
 
@@ -387,7 +390,7 @@ df['Revenue'] = df['Revenue'].apply(normalizer.normalize_currency)
 df['Margin'] = df['Margin'].apply(normalizer.normalize_percentage)
 ```
 
-### MIPROv2 Optimization
+### MIPROv2 Optimization 
 
 ```python
 from structpdf import structPDFOptimizer, OptimizerConfig
@@ -403,7 +406,7 @@ optimized = optimizer.optimize(trainset, metric)
 optimized.save("production_model.json")
 ```
 
-## Cloud-Agnostic Architecture / System Design
+## Cloud-Agnostic Architecture / Future System Design
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -435,13 +438,13 @@ optimized.save("production_model.json")
 - Parallel (10 workers): 10 workers × 50 docs/hour = 10 hours
 - Parallel (100 workers): 100 workers × 50 docs/hour = 1 hour
 - Infrastructure Cost: ~$0.15-0.20/hour/worker
+- Total Cost = 100 worker-hours $\times$ ($0.15 - $0.20 per worker-hour) = $15.00 - $20.00
 
 ## Examples
 
 See demo notebooks:
-- `structpdf-quick-demo.ipynb` - Quick start guide
-- `structpdf_demo.ipynb` - Detailed walkthrough
-- `structpdf_demo_advanced.ipynb` - Advanced features
+- [`structpdf-quick-demo.ipynb`](structpdf-quick-demo.ipynb) - Quick start guide
+
 
 ## Module Structure
 
@@ -483,6 +486,9 @@ ANTHROPIC_API_KEY=your_anthropic_key_here  # Optional for Claude
 ```python
 from dotenv import load_dotenv
 import os
+
+# Or api key here
+# os.environ["OPENAI_API_KEY"] = "sk-your-api-key-here"
 
 # Load environment variables from .env file
 load_dotenv()
