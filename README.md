@@ -481,7 +481,7 @@ from struxpdf import StruxPDF
 
 ## License
 
-MIT
+Apache 
 
 ## Dependencies
 
