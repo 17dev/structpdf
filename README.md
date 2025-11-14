@@ -90,7 +90,7 @@ df.to_excel("financial_data.xlsx")
 - Batch Processing - Optimized for 5K docs/quarter
 - Export Formats - CSV, Excel, JSON, DataFrame
 
-**Optimization Pathway**
+**Optimization Pathway/ Futue**
 - MIPROv2 Optimizer - 25-30% accuracy improvement with 10-20 training examples
 - GEPA Optimizer - Advanced reflective optimization for complex reasoning
 - Best-of-N Refinement - Generate multiple candidates and select best (15-30% boost)
