@@ -1,6 +1,6 @@
-# StruxPDF v0.2.0 - Production Financial Extraction
+# StruxPDF 
 
-Structured extraction with 100% page coverage, 92%+ accuracy, and multi-model support via LiteLLM.
+Structured data extraction with 100% page coverage, 92%+ accuracy, and multi-model support via LiteLLM from PDFs.
 
 ## Background
 
