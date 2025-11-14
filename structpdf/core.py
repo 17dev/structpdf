@@ -1,5 +1,5 @@
 """
-StruxPDF: Financial Data Extraction with DSPy
+structPDF: Financial Data Extraction with DSPy
 Fast, accurate PDF extraction with incremental feature building
 """
 
@@ -126,12 +126,12 @@ class FinancialExtractor(dspy.Module):
 # ============================================================================
 # MAIN PROCESSOR
 # ============================================================================
-class StruxPDF:
+class structPDF:
     """
     Main PDF financial extraction class
     
     Usage:
-        extractor = StruxPDF()
+        extractor = structPDF()
         result = extractor.process("quarterly_report.pdf")
         df = extractor.to_dataframe()
     """

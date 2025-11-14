@@ -1,0 +1,79 @@
+# PDF Files - Don't commit source documents
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+
+# Environment Variables - NEVER commit API keys!
+.env
+.env.local
+.env.*.local
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Output Files
+*.xlsx
+*.xls
+*.csv
+*.json
+financial_data.*
+output/
+results/
+
+# DSPy Cache - Don't commit cached LLM responses
+.dspy_cache/
+dspy_cache/
+*.dspy
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log
+logs/
+
+# Documentation builds
+docs/_build/
+
+# Model files (if optimized models are large)
+*.pkl
+*.pickle
+production_model.json
