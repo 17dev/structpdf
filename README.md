@@ -58,6 +58,8 @@ rm -rf ~/.dspy_cache/
 
 Then run your code - __it will fail without an API key!__
 
+## Throughput and latency
+Any throughput limits can be handled by PTU, parallel clusters, or our own model serving endpoint (using any open weights VLM or LLM or SML). This allows very low latency and smooth high volume processing.
 
 ## Quick Start
 
