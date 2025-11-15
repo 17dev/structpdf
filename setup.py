@@ -21,7 +21,7 @@ setup(
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Financial and Insurance Industry",
         "Topic :: Office/Business :: Financial",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache-2.0",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
